@@ -15,6 +15,9 @@ public class UserRegisterDTO {
         this.password = password;
         this.role = role;
     }
+
+    public UserRegisterDTO(){}
+
     public String getEmailId(){
         return emailId;
     }
@@ -29,5 +32,21 @@ public class UserRegisterDTO {
 
     public Role getRole() {
         return role;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

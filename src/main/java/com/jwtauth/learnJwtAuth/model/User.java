@@ -25,14 +25,14 @@ public class User implements UserDetails {
 
     private String password;
 
-
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(Long id, String password, String email, String name, Role role) {
+    public User(Long id, String name, String email, String password, Role role) {
         this.id = id;
-        this.password = password;
-        this.email = email;
         this.name = name;
+        this.email = email;
+        this.password = password;
         this.role = role;
     }
 
@@ -107,6 +107,17 @@ public class User implements UserDetails {
     }
 
     public void setRole(Role role){
-        this.role = this.role;
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

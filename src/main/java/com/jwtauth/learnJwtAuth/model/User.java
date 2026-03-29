@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return this.email=email;
     }
 
     @Override
@@ -109,6 +109,8 @@ public class User implements UserDetails {
     public void setRole(Role role){
         this.role = role;
     }
+
+
 
     @Override
     public String toString() {

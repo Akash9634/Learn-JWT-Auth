@@ -1,6 +1,7 @@
 package com.jwtauth.learnJwtAuth.controllers;
 
 import com.jwtauth.learnJwtAuth.DTO.LoginDTO;
+import com.jwtauth.learnJwtAuth.DTO.LoginResponse;
 import com.jwtauth.learnJwtAuth.DTO.UserRegisterDTO;
 import com.jwtauth.learnJwtAuth.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDTO request){
-        authService.loginUser(request);
-        return ResponseEntity.ok("user logged in successfully");
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO request){
+        LoginResponse loginResponse = authService.loginUser(request);
+        return ResponseEntity.ok(loginResponse);
     }
 }

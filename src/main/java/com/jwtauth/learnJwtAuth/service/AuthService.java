@@ -1,6 +1,7 @@
 package com.jwtauth.learnJwtAuth.service;
 
 import com.jwtauth.learnJwtAuth.DTO.LoginDTO;
+import com.jwtauth.learnJwtAuth.DTO.LoginResponse;
 import com.jwtauth.learnJwtAuth.DTO.UserRegisterDTO;
 import com.jwtauth.learnJwtAuth.model.User;
 import com.jwtauth.learnJwtAuth.repository.UserRepository;
@@ -18,11 +19,13 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager){
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public void registerUser(UserRegisterDTO request){
@@ -42,7 +45,7 @@ public class AuthService {
 
     }
 
-    public void loginUser(LoginDTO request){
+    public LoginResponse loginUser(LoginDTO request){
         try{
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -50,12 +53,16 @@ public class AuthService {
                             request.getPassword()
                     )
             );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+
 
             User user = (User) authentication.getPrincipal();
 
+            String token = jwtService.generateToken(user);
 
-            System.out.println("login successful for " + user.getName() + "has permission of a " + user.getAuthorities());
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setToken(token);
+            loginResponse.setEmail(user.getEmail());
+
         }
         catch(AuthenticationException e){
             throw new RuntimeException("wrong credentials");

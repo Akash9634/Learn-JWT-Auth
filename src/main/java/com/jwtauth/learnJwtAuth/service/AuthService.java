@@ -63,6 +63,8 @@ public class AuthService {
             loginResponse.setToken(token);
             loginResponse.setEmail(user.getEmail());
 
+            return loginResponse;
+
         }
         catch(AuthenticationException e){
             throw new RuntimeException("wrong credentials");
